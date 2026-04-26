@@ -122,6 +122,70 @@ cat ~/.hermes/skills/creative/chatgpt-image-gen/templates/prompts.md
 | 图片生成失败 | 简化提示词，避免敏感内容 |
 | 提示词太长 | 分段发送或简化 Mermaid 代码 |
 
+## 替代方案
+
+### Ideogram API（推荐）
+
+Ideogram 文字渲染能力最强，最适合信息图生成。
+
+```bash
+# 获取 API Key: https://ideogram.ai/settings/api
+export IDEOGRAM_API_KEY="your-api-key"
+
+# 生成图片
+python ~/.hermes/skills/creative/chatgpt-image-gen/scripts/ideogram_generate.py \
+  --file prompt.txt \
+  --output output.png \
+  --aspect 10_16  # 竖屏公众号格式
+```
+
+**优势**：
+- 文字渲染最强（信息图核心需求）
+- 每日免费额度（约 10-20 张）
+- API 可自动化调用
+- 中文支持良好
+
+### 其他替代模型
+
+| 模型 | 特点 | 免费 | 推荐度 |
+|------|------|------|--------|
+| 通义万相 | 中文理解最佳 | ✅ 新用户额度 | ⭐⭐⭐⭐⭐ |
+| Bing Image Creator | DALL-E 3 质量 | ✅ 每日 15 张 | ⭐⭐⭐⭐ |
+| Stable Diffusion 本地 | 完全免费无限制 | ✅✅ | ⭐⭐⭐⭐⭐ |
+| FLUX.1 本地 | 高质量开源 | ✅✅ | ⭐⭐⭐⭐ |
+
+### 本地渲染（flowchart-to-instagram）
+
+完全自动化，无 Cloudflare 问题：
+
+```bash
+python ~/.hermes/skills/flowchart-to-instagram/scripts/flowchart_renderer.py \
+  input.mmd --output output.png
+```
+
+## Cloudflare 检测机制
+
+Chrome DevTools MCP 被 Cloudflare Turnstile 检测的原因：
+
+| 检测维度 | 检测内容 |
+|---------|---------|
+| WebDriver 标志 | `navigator.webdriver === true` |
+| CDP 连接 | 远程调试端口 9222 开放 |
+| 浏览器指纹 | Canvas/WebGL/Audio 指纹异常 |
+| 用户行为 | 鼠标轨迹、点击间隔过于精确 |
+| IP 信誉 | 来自数据中心/云服务器 |
+
+**绕过方案对比**：
+
+| 方案 | 效果 | 成本 | 推荐场景 |
+|------|------|------|---------|
+| 手动操作 | ✅ 100% | 免费 | 偶尔使用 |
+| Residential Proxy | ✅ 90% | $10-50/月 | 大规模自动化 |
+| 本地渲染 | ✅ 无需绕过 | 免费 | 信息图生成 |
+| API 调用 | ✅ 无浏览器 | 按量付费 | 开发者集成 |
+
+**重要**：Host 配置错误会导致资源加载失败，但**不是** Cloudflare 拦截的原因。即使资源正常加载，自动化特征仍会被检测。
+
 ## 相关技能
 
 - `mcp/chrome-screenshot` - 截取网页内容

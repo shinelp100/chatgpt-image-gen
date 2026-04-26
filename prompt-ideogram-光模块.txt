@@ -1,0 +1,34 @@
+Create an infographic showing optical module speed evolution timeline:
+
+Main Content:
+- Timeline from 2025 to 2029
+- Speed progression: 400G → 800G → 1.6T → 3.2T
+- Key milestones for each year
+
+Visual Style:
+- Gradient purple to orange background (Instagram style)
+- Frosted glass cards with soft shadows
+- Hand-drawn educational illustration style
+- Cream paper texture background (#FFFBF5)
+- Hand-drawn borders and frames
+- Red accent color (#E8655A)
+
+Text Content (Chinese):
+- Title: 光模块规格演进时间轴
+- 2025年: 800G规模化出货 主流规格确立
+- 2026年: 1.6T商业化元年 800G出货峰值
+- 2027-2028年: 3.2T试产/CPO量产 1.6T全面替换800G
+- 2029年+: CPO/下一代可插拔主流 3.2T规模上量
+
+Comparison Section:
+- 400G: 数据中心互联入门
+- 800G: AI集群主流互联 供不应求
+- 1.6T: 2026商业化元年 核心增量赛道
+- 3.2T: 2027-2028年渐近 TFLN调制器关键窗口
+
+Layout:
+- Vertical format (suitable for WeChat公众号)
+- Width: 800px
+- Timeline on top, comparison cards below
+- Clean visual hierarchy
+- Professional infographic style

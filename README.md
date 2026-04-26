@@ -10,7 +10,7 @@
 
 ## 重要限制
 
-**Cloudflare Turnstile 拦截**：ChatGPT 使用 Cloudflare 安全验证，自动化浏览器会被检测为机器人。**推荐使用手动模式**。
+**Cloudflare Turnstile 拦截**：ChatGPT 使用 Cloudflare 安全验证，自动化浏览器会被检测为机器人。**推荐使用手动模式或 API 方案**。
 
 ## 使用方式（手动模式）
 
@@ -65,6 +65,56 @@ cat ~/.hermes/skills/creative/chatgpt-image-gen/prompt-光模块规格演进.txt
 ## 前置条件
 
 1. ChatGPT Plus 或 Pro 订阅（图片生成需要 GPT-4o 模型）
+
+## 替代方案
+
+### Ideogram API（推荐）
+
+Ideogram 文字渲染能力最强，最适合信息图生成。
+
+```bash
+# 获取 API Key: https://ideogram.ai/settings/api
+export IDEOGRAM_API_KEY="your-api-key"
+
+# 生成图片
+python ~/.hermes/skills/creative/chatgpt-image-gen/scripts/ideogram_generate.py \
+  --file prompt.txt --output output.png --aspect 10_16
+```
+
+**优势**：
+- 文字渲染最强（信息图核心需求）
+- 每日免费额度（约 10-20 张）
+- API 可自动化调用
+- 中文支持良好
+
+### 其他推荐模型
+
+| 模型 | 特点 | 免费 | 推荐度 |
+|------|------|------|--------|
+| 通义万相 | 中文理解最佳 | ✅ 新用户额度 | ⭐⭐⭐⭐⭐ |
+| Bing Image Creator | DALL-E 3 质量 | ✅ 每日 15 张 | ⭐⭐⭐⭐ |
+| Stable Diffusion 本地 | 完全免费无限制 | ✅✅ | ⭐⭐⭐⭐⭐ |
+| FLUX.1 本地 | 高质量开源 | ✅✅ | ⭐⭐⭐⭐ |
+
+### 本地渲染（flowchart-to-instagram）
+
+完全自动化，无 Cloudflare 问题：
+
+```bash
+python ~/.hermes/skills/flowchart-to-instagram/scripts/flowchart_renderer.py \
+  input.mmd --output output.png
+```
+
+## Cloudflare 检测说明
+
+Chrome DevTools MCP 被 Cloudflare Turnstile 拦截的原因：
+
+- `navigator.webdriver === true`（自动化标志）
+- CDP 远程调试端口开放
+- 浏览器指纹异常
+- 用户行为机械化
+
+**重要**：Host 配置无法绕过 Cloudflare，检测基于浏览器特征而非资源加载。
 
 ## 相关技能
 
