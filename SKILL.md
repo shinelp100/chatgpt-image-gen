@@ -15,6 +15,17 @@ depends_on:
 
 **Cloudflare Turnstile 拦截**：ChatGPT 使用 Cloudflare 安全验证，Chrome DevTools MCP 控制的浏览器会被检测为机器人，自动化方案**无法工作**。
 
+**ChatGPT 官网 vs OpenAI API 计费差异**：
+
+| 对比项 | ChatGPT 官网 (chatgpt.com) | OpenAI API (platform.openai.com) |
+|--------|---------------------------|----------------------------------|
+| 计费模式 | 订阅制 (Free/Plus/Pro) | 按量付费（必须绑卡） |
+| 免费额度 | Free 用户每天几张图片 | **没有免费额度** |
+| 付款方式 | Free 用户不需要绑卡 | 必须绑定信用卡 |
+| 适用场景 | 个人使用 | 开发者集成 |
+
+**结论**：即使 ChatGPT 官网可以免费生成图片，API 平台也需要绑定付款方式才能使用。
+
 **推荐模式**：手动操作 + 提示词模板文件
 
 ## 触发场景
