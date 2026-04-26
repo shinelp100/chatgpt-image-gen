@@ -1,7 +1,7 @@
 ---
 name: chatgpt-image-gen
-description: 使用 ChatGPT GPT-4o image generation 功能生成图片，通过 Chrome DevTools MCP 自动化浏览器操作
-version: 1.0.0
+description: 使用 ChatGPT GPT-4o 生成高质量图片（手动模式），提供提示词模板和约束条件模板
+version: 1.1.0
 repository: https://github.com/shinelp100/chatgpt-image-gen
 depends_on:
   - chrome-devtools-mcp
@@ -9,7 +9,13 @@ depends_on:
 
 # ChatGPT 图片生成
 
-使用 Chrome DevTools MCP 控制 ChatGPT 生成高质量图片。
+使用 ChatGPT GPT-4o 图片生成功能，提供预设提示词模板和约束条件。
+
+## 重要限制
+
+**Cloudflare Turnstile 拦截**：ChatGPT 使用 Cloudflare 安全验证，Chrome DevTools MCP 控制的浏览器会被检测为机器人，自动化方案**无法工作**。
+
+**推荐模式**：手动操作 + 提示词模板文件
 
 ## 触发场景
 
@@ -19,87 +25,54 @@ depends_on:
 
 ## 前置条件
 
-1. Chrome 浏览器已安装
-2. Chrome DevTools MCP 已配置（见 `mcp/native-mcp` skill）
-3. **已登录 ChatGPT 账号**（Plus 或 Pro 可用图片生成功能）
+1. ChatGPT Plus 或 Pro 订阅（图片生成需要 GPT-4o 模型）
+2. Chrome DevTools MCP 已配置（手动模式可选）
 
-**重要**: Chrome DevTools MCP 无法自动化 OAuth 登录流程（Google/Apple 登录）。必须确保：
-- 在自动化前手动完成登录
-- 或使用已保存登录状态的浏览器 session
-- 登录后 Cookie 会持久化，后续自动化可直接使用
+## 工作流程（手动模式）
 
-## 工作流程
-
-### 1. 打开 ChatGPT 并选择模式
+### 1. 准备提示词
 
 ```bash
-# 导航到 ChatGPT
-mcp_chrome_devtools_navigate_page url="https://chatgpt.com"
+# 查看提示词文件
+cat ~/.hermes/skills/creative/chatgpt-image-gen/prompt-光模块规格演进.txt
 ```
 
-### 2. 选择 GPT-4o 生图模型
+或使用模板生成新提示词：
 
-1. 点击左上角模型选择器
-2. 选择 "GPT-4o" 或 "DALL·E" 模式
-
-### 3. 填充提示词模板
-
-使用以下模板格式：
-
-```
-内容：[用户填写具体描述]
-
-要求：
-1、解析 Mermaid flowchart 语法，生成渐变背景 + 毛玻璃卡片的信息图
-2、支持 TD（垂直）和 LR（横向）布局
-3、自动水印（题材调研员）、emoji 匹配、品牌定制
-4、主题：`hand-drawn-edu` | 手绘风教育插画 | 米白纸张背景 + 手绘边框 | `#E8655A` |
+```bash
+# 提示词模板位置
+cat ~/.hermes/skills/creative/chatgpt-image-gen/templates/prompts.md
 ```
 
-### 4. 发送并等待生成
+### 2. 手动访问 ChatGPT
 
-点击发送按钮，等待图片生成完成。
+1. 在真实浏览器中打开 https://chatgpt.com
+2. 登录 ChatGPT Plus/Pro 账号
+3. 选择 **GPT-4o** 模型（支持图片生成）
 
-### 5. 下载图片
+### 3. 发送提示词
 
-右键图片 → 保存图片到本地
+复制提示词内容，粘贴到输入框，发送等待图片生成（约 1-2 分钟）。
 
-## 示例用法
+### 4. 下载图片
 
-**输入**：
-```
-用 ChatGPT 生成一张信息图，内容是：
+右键图片 → 保存到本地
 
-内容：股票研报工作流
-要求：
-1、解析 Mermaid flowchart 语法，生成渐变背景 + 毛玻璃卡片的信息图
-2、支持 TD（垂直）布局
-3、自动水印（题材调研员）
-4、主题：hand-drawn-edu
-```
-
-**执行步骤**：
-1. 打开 Chrome，导航到 chatgpt.com
-2. 选择 GPT-4o 模型
-3. 在输入框填入提示词
-4. 发送请求，等待图片生成
-5. 下载生成的图片
-
-## 提示词模板库
+## 提示词模板
 
 ### 信息图模板（公众号风格）
 
 ```
-内容：[标题]
+内容：[Mermaid flowchart 代码或描述内容]
 
 要求：
 1、解析 Mermaid flowchart 语法，生成渐变背景 + 毛玻璃卡片的信息图
 2、支持 TD（垂直）和 LR（横向）布局
 3、自动水印（题材调研员）、emoji 匹配、品牌定制
-4、主题：`hand-drawn-edu` | 手绘风教育插画 | 米白纸张背景 + 手绘边框 | `#E8655A` |
+4、主题：hand-drawn-edu | 手绘风教育插画 | 米白纸张背景 + 手绘边框 | #E8655A
 ```
 
-### 简洁风格模板
+### 简洁商务模板
 
 ```
 内容：[描述内容]
@@ -109,32 +82,37 @@ mcp_chrome_devtools_navigate_page url="https://chatgpt.com"
 尺寸：适合微信公众号（竖屏 800px 宽）
 ```
 
+## 示例用法
+
+**输入**：
+```
+用 ChatGPT 生成图片，内容是：[Mermaid flowchart 代码]
+```
+
+**执行步骤**：
+1. 读取提示词模板
+2. 保存提示词到文件（方便复制）
+3. 用户手动访问 ChatGPT
+4. 复制粘贴提示词，生成图片
+
 ## 注意事项
 
 - 图片生成需要 ChatGPT Plus 或 Pro 订阅
-- 每次生成消耗约 1-2 分钟
-- 需要保持浏览器窗口活跃状态
-- 建议在提示词中明确风格、配色、尺寸要求
+- 每次生成约 1-2 分钟
+- 提示词中明确风格、配色、尺寸要求
+- Cloudflare 拦截导致自动化无法工作
 
 ## 故障排查
 
 | 问题 | 解决方案 |
 |------|---------|
-| OAuth 登录弹窗无法自动化 | **手动登录后再运行自动化**，Chrome DevTools MCP 不支持第三方登录流程 |
+| Cloudflare "正在验证..." 卡住 | **无法绕过**，改用手动模式 |
 | 模型选择器找不到 GPT-4o | 检查账号是否有 Plus 订阅 |
 | 图片生成失败 | 简化提示词，避免敏感内容 |
-| 浏览器超时 | 增加等待时间，检查网络连接 |
-| MCP 连接失败 | 重启 Chrome DevTools MCP 服务 |
-| 页面加载卡住 | 尝试刷新页面，或使用 `mcp_chrome_devtools_press_key` 按 Escape 关闭弹窗 |
-
-## 已知限制
-
-1. **OAuth 登录无法自动化**: Google/Apple/手机登录会打开第三方页面，MCP 无法跨域操作
-2. **登录状态检查**: 执行自动化前先确认是否已登录（检查页面是否有"今天有什么计划？"而非登录按钮）
-3. **图片生成需 Plus**: GPT-4o 图片生成功能需要 ChatGPT Plus 或 Pro 订阅
+| 提示词太长 | 分段发送或简化 Mermaid 代码 |
 
 ## 相关技能
 
 - `mcp/chrome-screenshot` - 截取网页内容
-- `flowchart-to-instagram` - 本地信息图生成
+- `flowchart-to-instagram` - 本地信息图生成（无需 Cloudflare）
 - `beautiful-mermaid` - Mermaid 图表美化
