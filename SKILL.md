@@ -2,6 +2,7 @@
 name: chatgpt-image-gen
 description: 使用 ChatGPT GPT-4o image generation 功能生成图片，通过 Chrome DevTools MCP 自动化浏览器操作
 version: 1.0.0
+repository: https://github.com/shinelp100/chatgpt-image-gen
 depends_on:
   - chrome-devtools-mcp
 ---
