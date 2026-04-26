@@ -1,0 +1,24 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+*.log
+
+# Temp files
+tmp/
+temp/
+*.tmp
+
+# Output
+output/
+*.png
+*.jpg
+*.jpeg
+*.webp
