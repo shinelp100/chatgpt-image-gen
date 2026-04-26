@@ -1,0 +1,65 @@
+内容：
+%%{init: {
+  'theme': 'base',
+  'themeVariables': {
+    'primaryColor': '#FFE5D9',
+    'primaryTextColor': '#5D4E37',
+    'primaryBorderColor': '#E8C4B8',
+    'lineColor': '#B8A99A',
+    'secondaryColor': '#D4E7D4',
+    'secondaryTextColor': '#4A6741',
+    'secondaryBorderColor': '#A8C8A8',
+    'tertiaryColor': '#E8DFF5',
+    'tertiaryTextColor': '#5D4E6D',
+    'tertiaryBorderColor': '#C8B8D8',
+    'background': '#FFFBF5',
+    'mainBkg': '#FFF5EE',
+    'nodeBorder': '#E8D5C4',
+    'clusterBkg': '#F5F0EB',
+    'clusterBorder': '#D4C4B8',
+    'titleColor': '#6B5B4F',
+    'edgeLabelBackground': '#FFF9F0',
+    'fontFamily': 'PingFang SC, Microsoft YaHei, sans-serif',
+    'fontSize': '15px'
+  },
+  'flowchart': {
+    'curve': 'basis',
+    'padding': 20,
+    'nodeSpacing': 50,
+    'rankSpacing': 80,
+    'diagramPadding': 30
+  }
+}}%%
+flowchart TD
+    subgraph 时间轴["规格演进时间轴"]
+        T1["2025年\n800G规模化出货\n主流规格确立"] --> T2["2026年\n1.6T商业化元年\n800G出货峰值"]
+        T2 --> T3["2027-2028年\n3.2T试产/CPO量产\n1.6T全面替换800G"]
+        T3 --> T4["2029年+\nCPO/下一代可插拔主流\n3.2T规模上量"]
+    end
+    
+    subgraph 规格对比["规格对比"]
+        S1["400G\n数据中心互联入门"]
+        S2["800G\nAI集群主流互联\n供不应求"]
+        S3["1.6T\n2026商业化元年\n核心增量赛道"]
+        S4["3.2T\n2027-2028年渐近\nTFLN调制器关键窗口"]
+    end
+    
+    T1 --> S1
+    T2 --> S2
+    T2 --> S3
+    T3 --> S4
+    
+    style T1 fill:#D4E7D4,stroke:#A8C8A8,color:#4A6741
+    style T2 fill:#FFE5D9,stroke:#E8C4B8,color:#5D4E37
+    style T3 fill:#E8DFF5,stroke:#C8B8D8,color:#5D4E6D
+    style T4 fill:#FFF3CD,stroke:#E8D8A8,color:#6B5B4F
+    style S1 fill:#D4E7D4,stroke:#A8C8A8,color:#4A6741
+    style S2 fill:#FFE5D9,stroke:#E8C4B8,color:#5D4E37
+    style S3 fill:#FFE5D9,stroke:#E8C4B8,color:#5D4E37
+    style S4 fill:#E8DFF5,stroke:#C8B8D8,color:#5D4E6D
+
+要求：
+1、解析 Mermaid flowchart 语法，生成渐变背景 + 毛玻璃卡片的信息图
+2、支持 TD（垂直）和 LR（横向）布局
+3、自动水印（题材调研员）、emoji 匹配、品牌定制
+4、主题：hand-drawn-edu | 手绘风教育插画 | 米白纸张背景 + 手绘边框 | #E8655A
