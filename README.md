@@ -1,50 +1,49 @@
-# ChatGPT Image Generation (API 版)
+# ChatGPT Image Generation
 
-使用 OpenAI GPT-4o Image API 生成高质量图片，无需浏览器自动化。
+使用 ChatGPT GPT-4o 的图片生成功能，提供提示词模板和约束条件。
 
 ## 功能特点
 
-- **API 直接调用**：无需浏览器，无 Cloudflare 拦截问题
-- **开发者友好**：适用于本地化广告、信息图、教育内容、设计工具等业务场景
-- **预设模板**：信息图、教育内容、商务风格等多种模板
-- **微信适配**：竖屏 800px 宽度，适合公众号发布
+- 预设提示词模板（信息图风格）
+- 支持自定义约束条件
+- 适合微信公众号信息图生成
 
-## 快速开始
+## 重要限制
 
-### 1. 安装依赖
+**Cloudflare Turnstile 拦截**：ChatGPT 使用 Cloudflare 安全验证，自动化浏览器会被检测为机器人。**推荐使用手动模式**。
 
-```bash
-pip install openai
-```
+## 使用方式（手动模式）
 
-### 2. 配置 API Key
+### 1. 准备提示词
 
 ```bash
-export OPENAI_API_KEY="sk-xxx"
+# 查看提示词文件
+cat ~/.hermes/skills/creative/chatgpt-image-gen/prompt-光模块规格演进.txt
+
+# 快速复制到剪贴板
+cat ~/.hermes/skills/creative/chatgpt-image-gen/prompt-光模块规格演进.txt | pbcopy
 ```
 
-或从 https://platform.openai.com/api-keys 获取
+### 2. 手动访问 ChatGPT
 
-### 3. 生成图片
+1. 在浏览器中打开 https://chatgpt.com
+2. 登录 ChatGPT Plus/Pro 账号
+3. 选择 **GPT-4o** 模型
 
-```bash
-# 使用提示词文件
-python ~/.hermes/skills/creative/chatgpt-image-gen/scripts/generate_image.py \
-  --file prompt.txt \
-  --output image.png
+### 3. 发送提示词
 
-# 直接提供提示词
-python ~/.hermes/skills/creative/chatgpt-image-gen/scripts/generate_image.py \
-  --prompt "生成一张信息图..." \
-  --output image.png
-```
+复制提示词内容，粘贴到输入框，发送等待图片生成。
+
+### 4. 下载图片
+
+右键图片 → 保存到本地
 
 ## 提示词模板
 
 ### 信息图模板（公众号风格）
 
 ```
-内容：[描述内容]
+内容：[Mermaid flowchart 代码或描述内容]
 
 要求：
 1、解析 Mermaid flowchart 语法，生成渐变背景 + 毛玻璃卡片的信息图
@@ -63,20 +62,13 @@ python ~/.hermes/skills/creative/chatgpt-image-gen/scripts/generate_image.py \
 尺寸：适合微信公众号（竖屏 800px 宽）
 ```
 
-## API 适用场景
+## 前置条件
 
-根据 OpenAI 官方说明，GPT-image-2 API 支持：
-
-- 本地化广告制作
-- 信息图生成
-- 教育内容创作
-- 设计工具集成
-- 营销素材自动化
+1. ChatGPT Plus 或 Pro 订阅（图片生成需要 GPT-4o 模型）
 
 ## 相关技能
 
-- `mcp/chrome-screenshot` - 截取网页内容
-- `flowchart-to-instagram` - 本地信息图生成
+- `flowchart-to-instagram` - 本地信息图生成（无需 ChatGPT）
 - `beautiful-mermaid` - Mermaid 图表美化
 
 ## 许可证
