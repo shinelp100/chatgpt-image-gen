@@ -147,7 +147,8 @@ response = client.chat.completions.create(
 ## 注意事项
 
 - API 调用需要付费，按图片生成次数计费
-- GPT-4o 图片生成需要 Plus 或 Pro 订阅权限
+- 需要确保账户 billing 余额充足（billing hard limit 会阻止图片生成）
+- gpt-image-2 使用 Chat Completions API（不支持 response_format: image）
 - 图片生成时间约 10-30 秒
 - 生成结果可能包含文字描述而非图片，需根据响应类型处理
 
