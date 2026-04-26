@@ -21,7 +21,12 @@ depends_on:
 
 1. Chrome 浏览器已安装
 2. Chrome DevTools MCP 已配置（见 `mcp/native-mcp` skill）
-3. 已登录 ChatGPT 账号（Plus 或 Pro 可用图片生成功能）
+3. **已登录 ChatGPT 账号**（Plus 或 Pro 可用图片生成功能）
+
+**重要**: Chrome DevTools MCP 无法自动化 OAuth 登录流程（Google/Apple 登录）。必须确保：
+- 在自动化前手动完成登录
+- 或使用已保存登录状态的浏览器 session
+- 登录后 Cookie 会持久化，后续自动化可直接使用
 
 ## 工作流程
 
@@ -115,10 +120,18 @@ mcp_chrome_devtools_navigate_page url="https://chatgpt.com"
 
 | 问题 | 解决方案 |
 |------|---------|
+| OAuth 登录弹窗无法自动化 | **手动登录后再运行自动化**，Chrome DevTools MCP 不支持第三方登录流程 |
 | 模型选择器找不到 GPT-4o | 检查账号是否有 Plus 订阅 |
 | 图片生成失败 | 简化提示词，避免敏感内容 |
 | 浏览器超时 | 增加等待时间，检查网络连接 |
 | MCP 连接失败 | 重启 Chrome DevTools MCP 服务 |
+| 页面加载卡住 | 尝试刷新页面，或使用 `mcp_chrome_devtools_press_key` 按 Escape 关闭弹窗 |
+
+## 已知限制
+
+1. **OAuth 登录无法自动化**: Google/Apple/手机登录会打开第三方页面，MCP 无法跨域操作
+2. **登录状态检查**: 执行自动化前先确认是否已登录（检查页面是否有"今天有什么计划？"而非登录按钮）
+3. **图片生成需 Plus**: GPT-4o 图片生成功能需要 ChatGPT Plus 或 Pro 订阅
 
 ## 相关技能
 
